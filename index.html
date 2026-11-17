@@ -136,6 +136,15 @@
     .node i { width: 24px; height: 24px; font-size: 9.5px; }
     .node span { display: none; }
     .node.on { transform: translate(-50%, -50%) scale(1.18); }
+    :root { --bg: #0a0a12; --mute: rgba(243, 241, 236, .78); }
+    .aurora b:nth-child(1) { opacity: .68; }
+    .aurora b:nth-child(2) { opacity: .46; }
+    .aurora b:nth-child(3) { opacity: .5; }
+    .hero::before { background: radial-gradient(90% 70% at 50% 42%, transparent 0%, rgba(10, 10, 18, .28) 75%, var(--bg) 100%), linear-gradient(transparent 72%, var(--bg)); }
+    .orb { background: radial-gradient(circle, rgba(96, 66, 214, .34) 0%, rgba(70, 60, 190, .14) 48%, transparent 72%); }
+    .core { width: 52%; background: radial-gradient(circle, rgba(140, 100, 255, .38) 0%, rgba(120, 100, 250, .16) 45%, transparent 72%); }
+    .node { background: rgba(26, 24, 46, .82); }
+    .node i { color: rgba(243, 241, 236, .8); background: rgba(255, 255, 255, .12); }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -277,7 +286,7 @@
   function size() { var d = Math.min(window.devicePixelRatio || 1, 2); W = cv.clientWidth; cv.width = cv.height = Math.round(W * d); ctx.setTransform(d, 0, 0, d, 0, 0); S = W / 2 * .94; if (still) draw(); }
   function draw() {
     t += .013; if (!still && !drag) { rotY += .0032 + vel; vel *= .94; }
-    var c = W / 2, cy = Math.cos(rotY), sy = Math.sin(rotY), tilt = .32 + Math.sin(t * .21) * .08 + dragX, cx = Math.cos(tilt), sx = Math.sin(tilt), k = W / 270;
+    var c = W / 2, cy = Math.cos(rotY), sy = Math.sin(rotY), tilt = .32 + Math.sin(t * .21) * .08 + dragX, cx = Math.cos(tilt), sx = Math.sin(tilt), k = Math.max(W / 270, .95), sm = W < 230 ? 1.3 : 1;
     ctx.clearRect(0, 0, W, W);
     for (var i = 0; i < N; i++) {
       var n = NET[i]; n.x += n.vx; n.y += n.vy; n.z += n.vz;
@@ -286,16 +295,16 @@
       n.px = c + ax * S; n.py = c + ay * S;
     }
     var maxD = S * .27, maxD2 = maxD * maxD;
-    ctx.lineWidth = .5 * Math.max(1, k * .8); ctx.strokeStyle = "rgba(125,82,245,.78)";
+    ctx.lineWidth = .5 * Math.max(1, k * .8) * sm; ctx.strokeStyle = "rgba(158,122,255,.92)";
     for (var a = 0; a < N; a++) for (var b = a + 1; b < N; b++) {
       var dx = NET[a].px - NET[b].px, dy = NET[a].py - NET[b].py, d2 = dx * dx + dy * dy;
-      if (d2 < maxD2) { ctx.globalAlpha = (1 - d2 / maxD2) * .5 * (.72 + (NET[a].pz + NET[b].pz) * .16); ctx.beginPath(); ctx.moveTo(NET[a].px, NET[a].py); ctx.lineTo(NET[b].px, NET[b].py); ctx.stroke(); }
+      if (d2 < maxD2) { ctx.globalAlpha = Math.min(1, (1 - d2 / maxD2) * .62 * sm) * (.72 + (NET[a].pz + NET[b].pz) * .16); ctx.beginPath(); ctx.moveTo(NET[a].px, NET[a].py); ctx.lineTo(NET[b].px, NET[b].py); ctx.stroke(); }
     }
     for (var j = 0; j < N; j++) {
       var m = NET[j], dep = .78 + m.pz * .3;
-      ctx.globalAlpha = Math.min(1, m.a * 1.45 * dep + m.lit * .75);
+      ctx.globalAlpha = Math.min(1, m.a * 1.75 * sm * dep + m.lit * .75);
       if (m.lit > .35) { ctx.shadowColor = "rgba(225,185,255,.9)"; ctx.shadowBlur = 9 * m.lit; } else ctx.shadowBlur = 0;
-      ctx.fillStyle = "rgba(160,104,250,1)"; ctx.beginPath(); ctx.arc(m.px, m.py, m.r * k * dep * (1 + m.lit * .55), 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "rgba(196,160,255,1)"; ctx.beginPath(); ctx.arc(m.px, m.py, m.r * k * sm * dep * (1 + m.lit * .55), 0, Math.PI * 2); ctx.fill();
       m.lit = Math.max(0, m.lit - .038);
     }
     ctx.shadowBlur = 0;
