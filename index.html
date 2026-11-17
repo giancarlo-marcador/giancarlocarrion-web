@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Giancarlo Carrión · Partner IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050507;
+    --ink: #f3f1ec;
+    --mute: rgba(243, 241, 236, .62);
+    --faint: rgba(243, 241, 236, .38);
+    --line: rgba(255, 255, 255, .09);
+    --acc: #b9c4ff;
+    --acc-2: #8fe3ff;
+    --rose: #f3b6ff;
+    --ease: cubic-bezier(.32, .72, 0, 1);
+    --sans: "Geist", ui-sans-serif, sans-serif;
+    --mono: "Geist Mono", ui-monospace, monospace;
+    --serif: "Instrument Serif", Georgia, serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body::after { content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .055; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  /* Navegación: isla flotante */
+  .nav { position: fixed; z-index: 50; top: 18px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(14, 14, 20, .62); -webkit-backdrop-filter: blur(22px) saturate(150%); backdrop-filter: blur(22px) saturate(150%); box-shadow: inset 0 0 0 1px var(--line), inset 0 1px 0 rgba(255, 255, 255, .1), 0 24px 60px -30px #000; white-space: nowrap; }
+  .nav__id { display: flex; align-items: baseline; gap: 10px; font-weight: 500; font-size: 14.5px; letter-spacing: -.01em; }
+  .nav__id i { font: 400 10.5px/1 var(--mono); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--acc); }
+  .nav__links { display: none; gap: 2px; margin-left: 14px; }
+  .nav__links a { padding: 10px 14px; border-radius: 999px; font-size: 14px; color: var(--mute); transition: color .5s var(--ease), background .5s var(--ease); }
+  .nav__links a:hover { color: var(--ink); background: rgba(255, 255, 255, .06); }
+  .nav__cta { margin-left: 10px; padding: 11px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; background: var(--ink); color: #0a0a0e; transition: transform .5s var(--ease); }
+  .nav__cta:active { transform: scale(.97); }
+  @media (min-width: 900px) { .nav__links { display: flex; } }
+  @media (max-width: 480px) { .nav__id i { display: none; } }
+
+  /* Portada */
+  .hero { position: relative; isolation: isolate; min-height: 100dvh; padding: 150px 0 96px; overflow: hidden; }
+  .aurora { position: absolute; inset: 0; z-index: -2; }
+  .aurora b { position: absolute; border-radius: 50%; filter: blur(110px); will-change: transform; }
+  .aurora b:nth-child(1) { width: 720px; height: 720px; left: -260px; top: -300px; background: #3a2bd6; opacity: .5; animation: a1 22s var(--ease) infinite alternate; }
+  .aurora b:nth-child(2) { width: 620px; height: 620px; right: -200px; top: 60px; background: #a123b8; opacity: .3; animation: a2 26s var(--ease) infinite alternate; }
+  .aurora b:nth-child(3) { width: 680px; height: 680px; left: 30%; bottom: -460px; background: #0b84c9; opacity: .34; animation: a3 30s var(--ease) infinite alternate; }
+  @keyframes a1 { to { transform: translate(160px, 120px) scale(1.14); } }
+  @keyframes a2 { to { transform: translate(-150px, 130px) scale(.9); } }
+  @keyframes a3 { to { transform: translate(110px, -150px) scale(1.16); } }
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(70% 60% at 50% 42%, transparent 0%, rgba(5, 5, 7, .55) 70%, var(--bg) 100%), linear-gradient(transparent 62%, var(--bg)); }
+
+  .wrap { width: min(1240px, 100% - 40px); margin: 0 auto; }
+  .top { display: grid; gap: 56px; align-items: center; }
+  @media (min-width: 1000px) { .top { grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: 40px; } }
+
+  .tag { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 10px; border-radius: 999px; font: 500 10.5px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--ink); background: rgba(255, 255, 255, .05); box-shadow: inset 0 0 0 1px var(--line); }
+  .tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--acc-2); box-shadow: 0 0 0 4px rgba(143, 227, 255, .16), 0 0 16px var(--acc-2); }
+  h1 { margin-top: 28px; font-weight: 500; font-size: clamp(42px, 5.9vw, 88px); line-height: .98; letter-spacing: -.045em; text-wrap: balance; }
+  h1 em { display: block; margin-top: .08em; font: italic 400 1.06em/1 var(--serif); letter-spacing: -.02em; background: linear-gradient(100deg, var(--rose) 0%, var(--acc) 45%, var(--acc-2) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .12em; }
+  .lede { margin-top: 26px; max-width: 30em; font-size: clamp(16.5px, 1.35vw, 19px); line-height: 1.6; color: var(--mute); text-wrap: pretty; }
+  .act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin-top: 38px; }
+  .btn { display: inline-flex; align-items: center; gap: 16px; padding: 7px 7px 7px 26px; border-radius: 999px; font-size: 16.5px; font-weight: 500; letter-spacing: -.01em; background: var(--ink); color: #0a0a0e; box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 22px 60px -18px rgba(185, 196, 255, .75); transition: transform .6s var(--ease), box-shadow .6s var(--ease); }
+  .btn span { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #0a0a0e; color: var(--ink); transition: transform .6s var(--ease); }
+  .btn svg { width: 17px; height: 17px; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(255, 255, 255, .6), 0 30px 70px -18px rgba(185, 196, 255, .95); }
+  .btn:hover span { transform: translate(3px, -2px) scale(1.06); }
+  .btn:active { transform: scale(.98); }
+  .price { font-size: 14px; line-height: 1.45; color: var(--mute); }
+  .price b { display: block; font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+
+  /* Grafo de áreas */
+  .map { display: grid; justify-items: center; gap: 22px; }
+  .orb { --r: 38%; position: relative; width: min(100%, 580px); aspect-ratio: 1; }
+  .orb svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .ring { fill: none; stroke: rgba(255, 255, 255, .1); stroke-width: 1; }
+  .ring--dash { stroke: rgba(185, 196, 255, .28); stroke-dasharray: 2 10; transform-box: fill-box; transform-origin: center; animation: spin 80s linear infinite; }
+  .ring--dash2 { stroke: rgba(143, 227, 255, .2); stroke-dasharray: 1 16; animation-duration: 120s; animation-direction: reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spoke { stroke: rgba(185, 196, 255, .16); stroke-width: 1; transition: stroke .7s var(--ease), stroke-width .7s var(--ease); }
+  .spoke.on { stroke: url(#beam); stroke-width: 2; }
+  .edge { stroke: rgba(255, 255, 255, .07); stroke-width: 1; fill: none; }
+  .pulse { fill: #fff; filter: drop-shadow(0 0 5px var(--acc-2)); }
+  .core { position: absolute; left: 50%; top: 50%; width: 47%; aspect-ratio: 1; transform: translate(-50%, -50%); display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle, rgba(124, 82, 245, .22) 0%, rgba(109, 92, 242, .09) 42%, transparent 70%); pointer-events: none; }
+  .core canvas { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; pointer-events: auto; touch-action: none; cursor: grab; }
+  .core canvas.drag { cursor: grabbing; }
+  .core b { position: relative; display: grid; place-items: center; width: 34%; aspect-ratio: 1; border-radius: 50%; font-weight: 500; font-size: clamp(20px, 2.6vw, 34px); letter-spacing: -.04em; color: #fff; background: radial-gradient(circle, rgba(5, 5, 7, .82) 0%, rgba(5, 5, 7, .5) 55%, transparent 72%); text-shadow: 0 0 22px rgba(200, 150, 255, .9), 0 2px 14px rgba(5, 5, 7, .9); }
+  .node { position: absolute; left: calc(50% + var(--x) * var(--rx, var(--r))); top: calc(50% + var(--y) * var(--r)); transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 9px; padding: 9px 14px 9px 10px; border-radius: 999px; white-space: nowrap; font-size: 13.5px; font-weight: 500; letter-spacing: -.01em; color: var(--mute); background: rgba(12, 12, 20, .78); box-shadow: inset 0 0 0 1px var(--line), inset 0 1px 0 rgba(255, 255, 255, .08); transition: color .7s var(--ease), background .7s var(--ease), box-shadow .7s var(--ease), transform .7s var(--ease); }
+  .node i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font: 500 10px/1 var(--mono); font-style: normal; color: var(--faint); background: rgba(255, 255, 255, .06); transition: background .7s var(--ease), color .7s var(--ease); }
+  .node.on { color: #fff; background: rgba(34, 30, 78, .92); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .6), inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 44px -6px rgba(143, 227, 255, .6); }
+  .node.on i { background: var(--acc-2); color: #04121c; }
+  .node:focus-visible { outline: 2px solid var(--acc-2); outline-offset: 3px; }
+
+  .note-shell { width: min(100%, 500px); padding: 6px; border-radius: 26px; background: rgba(255, 255, 255, .035); box-shadow: inset 0 0 0 1px var(--line); }
+  .note { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: center; min-height: 88px; padding: 16px 20px; border-radius: 20px; background: linear-gradient(180deg, rgba(22, 21, 34, .92), rgba(11, 11, 17, .92)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1); }
+  .note__n { grid-row: span 2; font: italic 400 46px/1 var(--serif); color: var(--acc); min-width: 1.3em; }
+  .note__t { font: 500 10.5px/1.3 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--faint); align-self: end; }
+  .note__d { font-size: 15.5px; line-height: 1.4; color: var(--ink); align-self: start; text-wrap: pretty; }
+  .note > * { transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .note.swap > * { opacity: 0; transform: translateY(6px); }
+
+  /* Así funciona */
+  .steps-shell { margin-top: 84px; padding: 8px; border-radius: 34px; background: rgba(255, 255, 255, .035); box-shadow: inset 0 0 0 1px var(--line); }
+  .steps { display: grid; border-radius: 26px; overflow: hidden; background: linear-gradient(180deg, rgba(20, 19, 31, .9), rgba(9, 9, 14, .9)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1); }
+  .steps__h { padding: 26px 28px 6px; font: 500 10.5px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: var(--acc); }
+  .steps ol { list-style: none; display: grid; }
+  .steps li { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start; padding: 22px 28px; }
+  .steps li + li { box-shadow: inset 0 1px 0 var(--line); }
+  .steps li i { font: italic 400 44px/.9 var(--serif); color: var(--faint); }
+  .steps li b { display: block; font-weight: 500; font-size: 17px; letter-spacing: -.02em; }
+  .steps li p { margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: var(--mute); }
+  @media (min-width: 860px) {
+    .steps ol { grid-template-columns: repeat(3, 1fr); }
+    .steps li { padding: 22px 28px 30px; }
+    .steps li + li { box-shadow: inset 1px 0 0 var(--line); }
+  }
+
+  /* Entrada */
+  .up { opacity: 0; transform: translateY(34px); filter: blur(10px); transition: opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+  .ready .up { opacity: 1; transform: none; filter: none; }
+
+  @media (max-width: 999px) {
+    .hero { padding: 118px 0 72px; }
+    .orb { --r: 35.5%; width: min(100%, 440px); }
+    .node { font-size: 11.5px; padding: 6px 10px 6px 6px; gap: 6px; }
+    .node i { width: 19px; height: 19px; font-size: 8.5px; }
+    .steps-shell { margin-top: 56px; }
+  }
+  @media (max-width: 699px) {
+    .orb { --r: 41%; }
+    .node { font-size: 11.5px; padding: 5px; gap: 0; }
+    .node i { width: 24px; height: 24px; font-size: 9.5px; }
+    .node span { display: none; }
+    .node.on { transform: translate(-50%, -50%) scale(1.18); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .up { opacity: 1; transform: none; filter: none; }
+    .pulse { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Principal">
+  <a class="nav__id" href="#"><span>Giancarlo Carrión</span><i>Partner IA</i></a>
+  <div class="nav__links"><a href="#metodo">Método</a><a href="#como">Cómo funciona</a></div>
+  <a class="nav__cta" href="#solicitar">Solicita un diagnóstico</a>
+</nav>
+
+<header class="hero">
+  <div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <p class="tag up">Diagnóstico de IA en 45 minutos</p>
+        <h1 class="up" style="--i:1">Tu empresa tiene 10 áreas. <em>La IA puede mejorar cada una.</em></h1>
+        <p class="lede up" style="--i:2">Reviso contigo producto, clientes, comunicación, sistemas, datos, flujo de efectivo, legal, equipo, misión y liderazgo, y te digo dónde la IA te da resultado primero.</p>
+        <div class="act up" style="--i:3" id="solicitar">
+          <a class="btn" href="https://wa.me/51938823222?text=Hola%20Giancarlo%2C%20quiero%20solicitar%20un%20diagn%C3%B3stico%20de%20IA%20para%20mi%20empresa." target="_blank" rel="noopener">Solicita un diagnóstico <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+          <p class="price"><b>USD 47</b>Se descuentan si contratas.</p>
+        </div>
+      </div>
+
+      <div class="map up" style="--i:2" id="metodo">
+        <div class="orb" id="orb">
+          <svg viewBox="0 0 600 600" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="beam" gradientUnits="userSpaceOnUse" x1="300" y1="300" x2="300" y2="72"><stop offset="0" stop-color="#8fe3ff"/><stop offset="1" stop-color="#b9c4ff" stop-opacity=".25"/></linearGradient>
+            </defs>
+            <circle class="ring" cx="300" cy="300" r="228"/>
+            <circle class="ring ring--dash" cx="300" cy="300" r="262"/>
+            <circle class="ring ring--dash ring--dash2" cx="300" cy="300" r="150"/>
+            <g id="links"></g>
+          </svg>
+          <div class="core" aria-hidden="true"><canvas id="net"></canvas><b>IA</b></div>
+        </div>
+        <div class="note-shell">
+          <div class="note" id="note" aria-live="polite">
+            <span class="note__n" id="nN">01</span>
+            <span class="note__t" id="nT">Producto</span>
+            <span class="note__d" id="nD"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="steps-shell up" style="--i:4" id="como">
+      <div class="steps">
+        <h2 class="steps__h">Así funciona</h2>
+        <ol>
+          <li><i>1</i><div><b>Respondes un formulario corto</b><p>Sirve para saber si puedo ayudarte antes de reunirnos.</p></div></li>
+          <li><i>2</i><div><b>Nos reunimos 45 minutos</b><p>Por videollamada. Reviso contigo las 10 áreas de tu empresa.</p></div></li>
+          <li><i>3</i><div><b>Recibes tu diagnóstico escrito</b><p>Con el plan para aplicarlo y la cotización.</p></div></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+</header>
+
+<script>
+(function () {
+  "use strict";
+  /* Para pasar a 10 áreas basta con agregar dos líneas a esta lista. */
+  var AREAS = [
+    ["Producto", "Mejora tu oferta con lo que dicen y preguntan tus clientes."],
+    ["Clientes", "Da seguimiento a cada cliente y te avisa a quién llamar hoy."],
+    ["Comunicación", "Responde a tus clientes y te pasa solo los calificados."],
+    ["Sistemas", "Conecta tus herramientas y elimina el trabajo repetido."],
+    ["Datos", "Ordena tu información para que confíes en tus números."],
+    ["Flujo de efectivo", "Te muestra cada día cuánto entra, cuánto sale y qué falta cobrar."],
+    ["Legal", "Revisa contratos y documentos antes de que lleguen a tu abogado."],
+    ["Equipo", "Capacita a tu gente y le quita las tareas repetitivas."],
+    ["Misión", "Convierte tu meta en indicadores que revisas cada semana."],
+    ["Liderazgo", "Te da la información para decidir sin esperar reportes."]
+  ];
+  var NS = "http://www.w3.org/2000/svg", orb = document.getElementById("orb"), links = document.getElementById("links");
+  var note = document.getElementById("note"), nN = document.getElementById("nN"), nT = document.getElementById("nT"), nD = document.getElementById("nD");
+  var n = AREAS.length, R = 228, pts = [], nodes = [], spokes = [], active = -1, timer = null, hold = false;
+  var two = function (k) { return (k < 10 ? "0" : "") + k; };
+
+  AREAS.forEach(function (a, i) {
+    var ang = -Math.PI / 2 + i * 2 * Math.PI / n, cx = Math.cos(ang), cy = Math.sin(ang);
+    pts.push([300 + cx * R, 300 + cy * R]);
+  });
+  var ring = document.createElementNS(NS, "polygon");
+  ring.setAttribute("class", "edge"); ring.setAttribute("points", pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" "));
+  links.appendChild(ring);
+
+  AREAS.forEach(function (a, i) {
+    var p = pts[i], d = "M300,300 L" + p[0].toFixed(1) + "," + p[1].toFixed(1);
+    var line = document.createElementNS(NS, "path"); line.setAttribute("class", "spoke"); line.setAttribute("d", d); links.appendChild(line); spokes.push(line);
+    var dot = document.createElementNS(NS, "circle"); dot.setAttribute("class", "pulse"); dot.setAttribute("r", "2.6"); dot.setAttribute("opacity", "0");
+    var mv = document.createElementNS(NS, "animateMotion"); mv.setAttribute("dur", "3.2s"); mv.setAttribute("begin", (i * 0.4) + "s"); mv.setAttribute("repeatCount", "indefinite"); mv.setAttribute("path", d); mv.setAttribute("keyPoints", "0.2;1"); mv.setAttribute("keyTimes", "0;1"); mv.setAttribute("calcMode", "linear");
+    var op = document.createElementNS(NS, "animate"); op.setAttribute("attributeName", "opacity"); op.setAttribute("values", "0;1;1;0"); op.setAttribute("keyTimes", "0;.15;.8;1"); op.setAttribute("dur", "3.2s"); op.setAttribute("begin", (i * 0.4) + "s"); op.setAttribute("repeatCount", "indefinite");
+    dot.appendChild(mv); dot.appendChild(op); links.appendChild(dot);
+
+    var b = document.createElement("button"); b.type = "button"; b.className = "node";
+    b.style.setProperty("--x", ((p[0] - 300) / R).toFixed(4)); b.style.setProperty("--y", ((p[1] - 300) / R).toFixed(4));
+    b.innerHTML = "<i>" + two(i + 1) + "</i><span>" + a[0] + "</span>"; b.setAttribute("aria-label", a[0]);
+    b.addEventListener("pointerenter", function () { hold = true; show(i); });
+    b.addEventListener("focus", function () { hold = true; show(i); });
+    b.addEventListener("click", function () { hold = true; show(i); });
+    orb.appendChild(b); nodes.push(b);
+  });
+  orb.addEventListener("pointerleave", function () { hold = false; });
+
+  function show(i) {
+    if (i === active) return;
+    if (active >= 0) { nodes[active].classList.remove("on"); spokes[active].classList.remove("on"); }
+    active = i; nodes[i].classList.add("on"); spokes[i].classList.add("on"); if (window.netPulse) window.netPulse();
+    var p = pts[i], g = document.getElementById("beam"); g.setAttribute("x2", p[0].toFixed(1)); g.setAttribute("y2", p[1].toFixed(1));
+    note.classList.add("swap");
+    setTimeout(function () { nN.textContent = two(i + 1); nT.textContent = AREAS[i][0]; nD.textContent = AREAS[i][1]; note.classList.remove("swap"); }, 260);
+  }
+  show(0);
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    timer = setInterval(function () { if (!hold && !document.hidden) show((active + 1) % n); }, 3000);
+  }
+  requestAnimationFrame(function () { document.body.classList.add("ready"); });
+})();
+
+/* Red de memoria: la misma red neuronal morada de Memor.iA (130 nodos en una esfera, enlaces por cercanía,
+   descargas entre vecinos y onda que enciende nodos), aquí girando sola detrás de «IA». */
+(function () {
+  var cv = document.getElementById("net"); if (!cv) return;
+  var ctx = cv.getContext("2d"), still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var N = 250, dragX = 0, drag = null, vel = 0, NET = [], bolts = [], rings = [], W = 0, S = 0, rotY = 0, t = 0, raf = 0, seen = true;
+  for (var i = 0; i < N; i++) {
+    var phi = Math.acos(2 * Math.random() - 1), th = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * .9;
+    NET.push({ x: r * Math.sin(phi) * Math.cos(th), y: r * Math.sin(phi) * Math.sin(th), z: r * Math.cos(phi), vx: (Math.random() - .5) * .0005, vy: (Math.random() - .5) * .0005, vz: (Math.random() - .5) * .0005, r: .5 + Math.random() * 1.1, a: .28 + Math.random() * .45, lit: 0, px: 0, py: 0, pz: 0 });
+  }
+  function size() { var d = Math.min(window.devicePixelRatio || 1, 2); W = cv.clientWidth; cv.width = cv.height = Math.round(W * d); ctx.setTransform(d, 0, 0, d, 0, 0); S = W / 2 * .94; if (still) draw(); }
+  function draw() {
+    t += .013; if (!still && !drag) { rotY += .0032 + vel; vel *= .94; }
+    var c = W / 2, cy = Math.cos(rotY), sy = Math.sin(rotY), tilt = .32 + Math.sin(t * .21) * .08 + dragX, cx = Math.cos(tilt), sx = Math.sin(tilt), k = W / 270;
+    ctx.clearRect(0, 0, W, W);
+    for (var i = 0; i < N; i++) {
+      var n = NET[i]; n.x += n.vx; n.y += n.vy; n.z += n.vz;
+      if (n.x * n.x + n.y * n.y + n.z * n.z > 1) { n.vx = -n.vx; n.vy = -n.vy; n.vz = -n.vz; }
+      var ax = n.x * cy + n.z * sy, az = -n.x * sy + n.z * cy, ay = n.y * cx - az * sx; n.pz = n.y * sx + az * cx;
+      n.px = c + ax * S; n.py = c + ay * S;
+    }
+    var maxD = S * .27, maxD2 = maxD * maxD;
+    ctx.lineWidth = .5 * Math.max(1, k * .8); ctx.strokeStyle = "rgba(125,82,245,.78)";
+    for (var a = 0; a < N; a++) for (var b = a + 1; b < N; b++) {
+      var dx = NET[a].px - NET[b].px, dy = NET[a].py - NET[b].py, d2 = dx * dx + dy * dy;
+      if (d2 < maxD2) { ctx.globalAlpha = (1 - d2 / maxD2) * .5 * (.72 + (NET[a].pz + NET[b].pz) * .16); ctx.beginPath(); ctx.moveTo(NET[a].px, NET[a].py); ctx.lineTo(NET[b].px, NET[b].py); ctx.stroke(); }
+    }
+    for (var j = 0; j < N; j++) {
+      var m = NET[j], dep = .78 + m.pz * .3;
+      ctx.globalAlpha = Math.min(1, m.a * 1.45 * dep + m.lit * .75);
+      if (m.lit > .35) { ctx.shadowColor = "rgba(225,185,255,.9)"; ctx.shadowBlur = 9 * m.lit; } else ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(160,104,250,1)"; ctx.beginPath(); ctx.arc(m.px, m.py, m.r * k * dep * (1 + m.lit * .55), 0, Math.PI * 2); ctx.fill();
+      m.lit = Math.max(0, m.lit - .038);
+    }
+    ctx.shadowBlur = 0;
+    if (!still && Math.random() < .1 && bolts.length < 10) {
+      var si = Math.floor(Math.random() * N), nb = [];
+      for (var q = 0; q < N && nb.length < 3; q++) { if (q === si) continue; var ex = NET[q].x - NET[si].x, ey = NET[q].y - NET[si].y, ez = NET[q].z - NET[si].z; if (ex * ex + ey * ey + ez * ez < .09) nb.push(q); }
+      nb.forEach(function (ti) { bolts.push({ si: si, ti: ti, mx: (Math.random() - .5) * 16 * k, my: (Math.random() - .5) * 16 * k, life: 1 }); NET[si].lit = 1; NET[ti].lit = 1; });
+    }
+    for (var e = bolts.length - 1; e >= 0; e--) {
+      var bl = bolts[e]; bl.life -= .09; if (bl.life <= 0) { bolts.splice(e, 1); continue; }
+      var p1 = NET[bl.si], p2 = NET[bl.ti], qx = (p1.px + p2.px) / 2 + bl.mx, qy = (p1.py + p2.py) / 2 + bl.my;
+      ctx.globalAlpha = bl.life * .92; ctx.shadowColor = "rgba(200,140,255,1)"; ctx.shadowBlur = 14; ctx.strokeStyle = "rgba(200,150,255," + bl.life + ")"; ctx.lineWidth = 1.3 * bl.life * k;
+      ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.quadraticCurveTo(qx, qy, p2.px, p2.py); ctx.stroke();
+    }
+    for (var g = rings.length - 1; g >= 0; g--) {
+      var rg = rings[g]; rg.r += .022; var life = 1 - rg.r / 1.05; if (life <= 0) { rings.splice(g, 1); continue; }
+      for (var h = 0; h < N; h++) { var o = NET[h], od = Math.sqrt(o.x * o.x + o.y * o.y + o.z * o.z); if (Math.abs(od - rg.r) < .05) o.lit = Math.max(o.lit, life * .92); }
+      ctx.globalAlpha = life * .5; ctx.strokeStyle = "rgba(185,125,255,1)"; ctx.lineWidth = (1 + life) * k * .8; ctx.shadowColor = "rgba(160,100,255,1)"; ctx.shadowBlur = 16;
+      ctx.beginPath(); ctx.arc(c, c, rg.r * S, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+    var br = .09 + Math.sin(t * .42) * .04, bR = S * .5, bloom = ctx.createRadialGradient(c, c, 0, c, c, bR);
+    bloom.addColorStop(0, "rgba(212,168,75," + br + ")"); bloom.addColorStop(.5, "rgba(139,127,212," + br * .45 + ")"); bloom.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = bloom; ctx.fillRect(c - bR, c - bR, bR * 2, bR * 2);
+    if (!still && seen && !document.hidden) raf = requestAnimationFrame(draw); else raf = 0;
+  }
+  function go() { if (!raf && !still) raf = requestAnimationFrame(draw); }
+  window.netPulse = function () { if (!still && rings.length < 3) rings.push({ r: .08 }); };
+  cv.addEventListener("pointerdown", function (e) { drag = { x: e.clientX, y: e.clientY }; vel = 0; cv.classList.add("drag"); try { cv.setPointerCapture(e.pointerId); } catch (_) {} });
+  cv.addEventListener("pointermove", function (e) {
+    if (!drag) return;
+    var dx = (e.clientX - drag.x) * .009, dy = (e.clientY - drag.y) * .009; drag.x = e.clientX; drag.y = e.clientY;
+    rotY += dx; vel = dx * .5; dragX = Math.max(-1.2, Math.min(1.2, dragX - dy)); if (still) draw();
+  });
+  ["pointerup", "pointercancel"].forEach(function (ev) { cv.addEventListener(ev, function () { drag = null; cv.classList.remove("drag"); }); });
+  size(); window.addEventListener("resize", size);
+  if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { seen = en[0].isIntersecting; if (seen) go(); }).observe(cv);
+  document.addEventListener("visibilitychange", go);
+  if (still) draw(); else go();
+})();
+</script>
+</body>
+</html>
