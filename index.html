@@ -151,6 +151,49 @@
     .up { opacity: 1; transform: none; filter: none; }
     .pulse { display: none; }
   }
+  /* Pepper: entrevista con grafo y ficha en vivo */
+  .pep { position: fixed; inset: 0; z-index: 80; display: flex; justify-content: center; background: rgba(6, 6, 12, .9); -webkit-backdrop-filter: blur(26px); backdrop-filter: blur(26px); opacity: 0; visibility: hidden; transition: opacity .5s var(--ease), visibility 0s .5s; }
+  .pep.open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
+  .pep__in { position: relative; display: flex; flex-direction: column; width: min(100%, 520px); height: 100dvh; padding: 14px 16px 16px; transform: translateY(26px); transition: transform .7s var(--ease); }
+  .pep.open .pep__in { transform: none; }
+  .pep__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .pep__id b { display: block; font: 400 24px/1 var(--serif); font-style: italic; }
+  .pep__id span { display: block; margin-top: 4px; font: 500 9.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+  .pep__x { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px var(--line); font-size: 18px; }
+  .pep__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 12px; scrollbar-width: none; }
+  .pep__body::-webkit-scrollbar { display: none; }
+  .pep__orb { position: relative; display: grid; place-items: center; height: clamp(110px, 21dvh, 190px); background: radial-gradient(circle at 50% 52%, rgba(140, 100, 255, .42), transparent 62%); }
+  .pep__orb canvas { display: block; width: clamp(110px, 21dvh, 190px); height: clamp(110px, 21dvh, 190px); }
+  .pep.done .pep__orb { display: none; }
+  .pep.done .pep__say { margin-top: 18px; font-size: 17px; }
+  .pep__say { min-height: 3.2em; padding: 0 6px; text-align: center; font-size: clamp(18px, 4.8vw, 22px); line-height: 1.32; letter-spacing: -.015em; text-wrap: balance; transition: opacity .35s var(--ease), transform .35s var(--ease); }
+  .pep__say.swap { opacity: 0; transform: translateY(8px); }
+  .pep__say.dots::after { content: "…"; }
+  .pep__ans { display: block; width: fit-content; max-width: 90%; margin: 12px auto 0; padding: 7px 14px; border-radius: 999px; font-size: 13.5px; color: #fff; background: rgba(140, 100, 255, .32); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pep__ans:empty { display: none; }
+  .pep__ficha { margin-top: 18px; padding: 6px; border-radius: 24px; background: rgba(255, 255, 255, .04); box-shadow: inset 0 0 0 1px var(--line); }
+  .pep__ficha > div { padding: 14px 16px 12px; border-radius: 18px; background: rgba(140, 100, 255, .12); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .3), inset 0 1px 0 rgba(255, 255, 255, .1); }
+  .pep__ficha h3 { font: 500 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--acc); margin-bottom: 8px; }
+  .pep__ficha li { list-style: none; display: flex; gap: 10px; padding: 5px 0; font-size: 14.5px; line-height: 1.35; animation: pepin .6s var(--ease) both; }
+  .pep__ficha li i { flex: none; width: 1.3em; font: 500 11px/1.75 var(--mono); font-style: normal; color: var(--acc-2); }
+  .pep__ficha li span { color: var(--faint); margin-right: 6px; }
+  .pep__ficha li.w { color: var(--faint); animation: none; }
+  @keyframes pepin { from { opacity: 0; transform: translateY(8px); } }
+  .pep__end { display: none; margin-top: 16px; gap: 10px; flex-direction: column; align-items: stretch; }
+  .pep.done .pep__end { display: flex; }
+  .pep.done .pep__form { display: none; }
+  .pep__end .btn { justify-content: space-between; font-size: 15.5px; }
+  .pep__redo { align-self: center; padding: 10px 14px; font-size: 13.5px; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; }
+  .pep__wa { align-self: center; padding: 12px 20px; border-radius: 999px; font-size: 14.5px; font-weight: 500; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .35); }
+  .pep__wa[hidden] { display: none; }
+  .pep__note { text-align: center; font-size: 12px; color: var(--faint); }
+  .pep__form { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .28); }
+  .pep__form input { flex: 1; min-width: 0; height: 44px; font: inherit; font-size: 16px; color: var(--ink); background: none; border: 0; outline: none; }
+  .pep__form input::placeholder { color: var(--faint); }
+  .pep__form button { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #0a0a0e; font-size: 18px; transition: transform .5s var(--ease), opacity .3s; }
+  .pep__form button:active { transform: scale(.94); }
+  .pep__form button:disabled { opacity: .4; }
+  body.pep-on { overflow: hidden; }
 </style>
 </head>
 <body>
@@ -210,6 +253,31 @@
     </section>
   </div>
 </header>
+
+<div class="pep" id="pepper" role="dialog" aria-modal="true" aria-labelledby="pepName" aria-hidden="true">
+  <div class="pep__in">
+    <div class="pep__top">
+      <div class="pep__id"><b id="pepName">Pepper</b><span>Asistente de IA de Giancarlo</span></div>
+      <button class="pep__x" type="button" id="pepClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="pep__body" id="pepBody">
+      <div class="pep__orb"><canvas id="pepNet" aria-hidden="true"></canvas></div>
+      <p class="pep__say" id="pepSay" aria-live="polite"></p>
+      <span class="pep__ans" id="pepAns"></span>
+      <section class="pep__ficha" aria-label="Tu ficha"><div><h3>Tu ficha · se llena sola</h3><ul id="pepFicha"></ul></div></section>
+      <div class="pep__end">
+        <a class="btn" id="pepGo" target="_blank" rel="noopener"><em id="pepGoT" style="font-style:normal"></em><span><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        <p class="pep__note" id="pepNote"></p>
+        <a class="pep__wa" id="pepWa" target="_blank" rel="noopener" hidden>Enviar mi ficha por WhatsApp</a>
+        <button class="pep__redo" type="button" id="pepRedo">Corregir mis respuestas</button>
+      </div>
+    </div>
+    <form class="pep__form" id="pepForm" autocomplete="off">
+      <input id="pepIn" type="text" maxlength="300" placeholder="Escribe aquí…" aria-label="Tu respuesta" enterkeyhint="send">
+      <button type="submit" aria-label="Enviar">↑</button>
+    </form>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -344,6 +412,117 @@
   if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { seen = en[0].isIntersecting; if (seen) go(); }).observe(cv);
   document.addEventListener("visibilitychange", go);
   if (still) draw(); else go();
+})();
+</script>
+<script>
+/* Pepper: entrevista al visitante, llena su ficha a la vista y cierra con la cita.
+   PEPPER.api vacío = preguntas fijas (sin IA). Con la dirección del servidor, conversa con Claude y,
+   si el servidor falla, sigue con las preguntas fijas. PEPPER.pay vacío = la ficha sale por WhatsApp. */
+(function () {
+  "use strict";
+  var PEPPER = { api: "https://pepper-servidor.vercel.app/api/pepper", pay: "https://buy.stripe.com/9B64gA5Fb7Go2BZ1qqeME09", wa: "51938823222" };
+  var root = document.getElementById("pepper"); if (!root) return;
+  var $ = function (id) { return document.getElementById(id); };
+  var say = $("pepSay"), ans = $("pepAns"), list = $("pepFicha"), form = $("pepForm"), input = $("pepIn"), send = form.querySelector("button"), body = $("pepBody");
+  var FIELDS = [["nombre", "Nombre"], ["empresa", "Empresa"], ["equipo", "Equipo"], ["dolor", "Lo que más tiempo quita"], ["meta", "Meta"], ["contacto", "Contacto"]];
+  var QS = [
+    ["nombre", "Hola, soy Pepper, la asistente de IA de Giancarlo. Te hago unas preguntas cortas para preparar tu diagnóstico. ¿Cómo te llamas?"],
+    ["empresa", "Mucho gusto, {nombre}. ¿A qué se dedica tu empresa?"],
+    ["equipo", "¿Cuántas personas trabajan contigo?"],
+    ["dolor", "¿Qué es lo que más tiempo le quita hoy a tu equipo?"],
+    ["meta", "Si la IA te resolviera una sola cosa en los próximos 3 meses, ¿cuál sería?"],
+    ["contacto", "¿A qué WhatsApp o correo te confirmo la cita?"]
+  ];
+  var CLOSE = "Puedo sacarte cita dentro de las próximas 48 horas. Una vez realizado el pago, te doy la hora exacta.";
+  var ficha, hist, step, busy, live, started = false, lastFocus = null;
+
+  function clean(t) { return String(t || "").replace(/\s+/g, " ").trim().slice(0, 300); }
+  function speak(text, then) {
+    say.classList.add("swap");
+    setTimeout(function () { say.textContent = text; say.classList.remove("swap", "dots"); if (window.pepPulse) window.pepPulse(); if (then) then(); }, 300);
+  }
+  function drawFicha() {
+    list.textContent = ""; var n = 0;
+    FIELDS.forEach(function (f) {
+      if (!ficha[f[0]]) return; n++;
+      var li = document.createElement("li"), i = document.createElement("i"), d = document.createElement("div"), s = document.createElement("span");
+      i.textContent = n; s.textContent = f[1] + ":"; d.appendChild(s); d.appendChild(document.createTextNode(ficha[f[0]])); li.appendChild(i); li.appendChild(d); list.appendChild(li);
+    });
+    if (!n) { var w = document.createElement("li"); w.className = "w"; w.textContent = "Aquí aparece lo que me vayas contando."; list.appendChild(w); }
+  }
+  function summary() { var n = 0; return FIELDS.filter(function (f) { return ficha[f[0]]; }).map(function (f) { n++; return n + ". " + f[1] + ": " + ficha[f[0]]; }).join("\n"); }
+  function finish(line) {
+    var who = ficha.nombre ? ", " + ficha.nombre.split(" ")[0] : "";
+    speak((line || "Listo" + who + ". Lo que tengo en la ficha de tu perfil es lo de abajo.") + " " + CLOSE, function () {
+      root.classList.add("done"); ans.textContent = "";
+      var go = $("pepGo"), wa = $("pepWa"), waUrl = "https://wa.me/" + PEPPER.wa + "?text=" + encodeURIComponent("Hola Giancarlo, Pepper ya me entrevistó para el diagnóstico de IA. Mi ficha:\n" + summary());
+      if (PEPPER.pay) { go.href = PEPPER.pay; $("pepGoT").textContent = "Pagar diagnóstico · USD 47"; $("pepNote").textContent = "USD 47, se descuentan si contratas. Después de pagar, envía tu ficha para recibir la hora exacta:"; wa.href = waUrl; wa.hidden = false; }
+      else { go.href = waUrl; $("pepGoT").textContent = "Enviar mi ficha por WhatsApp"; $("pepNote").textContent = "Giancarlo te responde ahí con el pago y la hora de tu cita."; wa.hidden = true; }
+      body.scrollTop = 0;
+    });
+  }
+  function ask() {
+    while (step < QS.length && ficha[QS[step][0]]) step++;
+    if (step >= QS.length) return finish();
+    speak(QS[step][1].replace("{nombre}", (ficha.nombre || "").split(" ")[0]));
+  }
+  function fixed(text) { ficha[QS[step][0]] = text; drawFicha(); step++; ask(); }
+  function remote(text) {
+    busy = true; send.disabled = true; say.classList.add("dots");
+    var ctl = window.AbortController ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
+    fetch(PEPPER.api, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: hist }), signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (d) {
+        if (!d || !d.reply) throw new Error("vacío");
+        FIELDS.forEach(function (f) { var v = clean(d.ficha && d.ficha[f[0]]); if (v) ficha[f[0]] = v; });
+        drawFicha(); hist.push({ role: "assistant", content: d.reply });
+        if (d.lista) finish(d.reply); else speak(d.reply);
+      })
+      .catch(function () { live = false; say.classList.remove("dots"); fixed(text); })
+      .then(function () { clearTimeout(to); busy = false; send.disabled = false; });
+  }
+  function start() {
+    ficha = {}; hist = []; step = 0; busy = false; live = !!PEPPER.api; started = true;
+    root.classList.remove("done"); ans.textContent = ""; drawFicha();
+    say.textContent = ""; speak(QS[0][1]); hist.push({ role: "assistant", content: QS[0][1] });
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); var text = clean(input.value); if (!text || busy || root.classList.contains("done")) return;
+    input.value = ""; ans.textContent = text; hist.push({ role: "user", content: text });
+    if (live) remote(text); else fixed(text);
+  });
+  function open(e) {
+    if (e) e.preventDefault(); lastFocus = document.activeElement;
+    root.classList.add("open"); root.setAttribute("aria-hidden", "false"); document.body.classList.add("pep-on");
+    if (!started) start(); if (window.pepWake) window.pepWake();
+    setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (_) {} }, 350);
+  }
+  function close() { root.classList.remove("open"); root.setAttribute("aria-hidden", "true"); document.body.classList.remove("pep-on"); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  [].forEach.call(document.querySelectorAll(".nav__cta, #solicitar .btn"), function (a) { a.addEventListener("click", open); });
+  $("pepClose").addEventListener("click", close); $("pepRedo").addEventListener("click", function () { start(); input.focus(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && root.classList.contains("open")) close(); });
+
+  /* Grafo de Pepper: versión chica de la misma red morada */
+  var cv = $("pepNet"), ctx = cv.getContext("2d"), still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var P = [], N = 90, W = 0, rot = 0, glow = 0, raf = 0;
+  for (var i = 0; i < N; i++) { var ph = Math.acos(2 * Math.random() - 1), th = Math.random() * 6.283, r = Math.sqrt(Math.random()) * .9; P.push({ x: r * Math.sin(ph) * Math.cos(th), y: r * Math.sin(ph) * Math.sin(th), z: r * Math.cos(ph), s: .7 + Math.random() }); }
+  function draw() {
+    raf = 0; var w = cv.clientWidth; if (!w) return;
+    if (w !== W) { var d = Math.min(window.devicePixelRatio || 1, 2); W = w; cv.width = cv.height = Math.round(w * d); ctx.setTransform(d, 0, 0, d, 0, 0); }
+    rot += .005 + glow * .02; glow *= .96;
+    var c = W / 2, S = c * .92, cy = Math.cos(rot), sy = Math.sin(rot), max = S * .42, max2 = max * max, a, b;
+    ctx.clearRect(0, 0, W, W);
+    for (a = 0; a < N; a++) { var p = P[a], ax = p.x * cy + p.z * sy, az = -p.x * sy + p.z * cy; p.px = c + ax * S; p.py = c + (p.y * .95 - az * .3) * S; p.d = .75 + az * .3; }
+    ctx.lineWidth = .7; ctx.strokeStyle = "rgba(170,135,255,1)";
+    for (a = 0; a < N; a++) for (b = a + 1; b < N; b++) { var dx = P[a].px - P[b].px, dy = P[a].py - P[b].py, d2 = dx * dx + dy * dy; if (d2 < max2) { ctx.globalAlpha = Math.min(1, (1 - d2 / max2) * (.5 + glow * .5)); ctx.beginPath(); ctx.moveTo(P[a].px, P[a].py); ctx.lineTo(P[b].px, P[b].py); ctx.stroke(); } }
+    ctx.fillStyle = "rgba(214,188,255,1)";
+    for (a = 0; a < N; a++) { ctx.globalAlpha = Math.min(1, P[a].d * (.75 + glow)); ctx.beginPath(); ctx.arc(P[a].px, P[a].py, P[a].s * (1.2 + glow * .8) * P[a].d, 0, 6.283); ctx.fill(); }
+    ctx.globalAlpha = 1;
+    if (!still && root.classList.contains("open") && !document.hidden) raf = requestAnimationFrame(draw);
+  }
+  window.pepWake = function () { if (!raf) raf = requestAnimationFrame(draw); };
+  window.pepPulse = function () { glow = 1; window.pepWake(); };
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && root.classList.contains("open")) window.pepWake(); });
 })();
 </script>
 </body>
