@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Giancarlo Carrión · Partner IA</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -160,43 +162,45 @@
   .pep.open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease); }
   .pep__in { position: relative; display: flex; flex-direction: column; width: min(100%, 520px); height: 100dvh; padding: 14px 16px 16px; transform: translateY(26px); transition: transform .7s var(--ease); }
   .pep.open .pep__in { transform: none; }
-  .pep__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .pep__top { display: flex; align-items: center; gap: 10px; }
+  .pep__id { flex: 1; min-width: 0; }
   .pep__id b { display: block; font: 400 24px/1 var(--serif); font-style: italic; }
   .pep__id span { display: block; margin-top: 4px; font: 500 9.5px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
-  .pep__x { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px var(--line); font-size: 18px; }
-  .pep__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 12px; scrollbar-width: none; }
+  .pep__count { flex: none; padding: 8px 11px; border-radius: 999px; font: 500 11px/1 var(--mono); white-space: nowrap; background: rgba(140, 100, 255, .2); color: #c4a0ff; }
+  .pep__x { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px var(--line); font-size: 18px; }
+  .pep__orb { flex: none; display: grid; place-items: center; height: clamp(104px, 17dvh, 150px); margin-top: 2px; background: radial-gradient(circle at 50% 52%, rgba(140, 100, 255, .42), transparent 62%); }
+  .pep__orb canvas { display: block; width: clamp(104px, 17dvh, 150px); height: clamp(104px, 17dvh, 150px); border-radius: 50%; touch-action: none; cursor: grab; }
+  .pep__pills { flex: none; display: flex; gap: 6px; min-height: 1px; padding: 6px 0 10px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line); }
+  .pep__pills::-webkit-scrollbar { display: none; }
+  .pep__pills:empty { padding: 6px 0 0; }
+  .pep__pills span { flex: none; max-width: 220px; padding: 6px 11px; border-radius: 999px; font-size: 12px; color: var(--mute); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; animation: pepin .6s var(--ease) both; }
+  .pep__pills b { font-weight: 500; color: #c4a0ff; }
+  .pep__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 14px 0 10px; scrollbar-width: none; }
   .pep__body::-webkit-scrollbar { display: none; }
-  .pep__orb { position: relative; display: grid; place-items: center; height: clamp(140px, 25dvh, 220px); background: radial-gradient(circle at 50% 52%, rgba(140, 100, 255, .42), transparent 62%); }
-  .pep__orb canvas { display: block; width: clamp(140px, 25dvh, 220px); height: clamp(140px, 25dvh, 220px); border-radius: 50%; touch-action: none; cursor: grab; }
-  .pep.done .pep__orb { display: none; }
-  .pep.done .pep__say { margin-top: 18px; font-size: 17px; }
-  .pep__say { min-height: 3.2em; padding: 0 6px; text-align: center; font-size: clamp(18px, 4.8vw, 22px); line-height: 1.32; letter-spacing: -.015em; text-wrap: balance; transition: opacity .35s var(--ease), transform .35s var(--ease); }
-  .pep__say.swap { opacity: 0; transform: translateY(8px); }
-  .pep__say.dots::after { content: "…"; }
-  .pep__ans { display: block; width: fit-content; max-width: 90%; margin: 12px auto 0; padding: 7px 14px; border-radius: 999px; font-size: 13.5px; color: #fff; background: rgba(140, 100, 255, .32); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .pep__ans:empty { display: none; }
-  .pep__start { display: block; margin: 14px auto 0; padding: 11px 20px; border-radius: 999px; font-size: 14.5px; font-weight: 500; background: var(--ink); color: #0a0a0e; }
-  .pep__start[hidden] { display: none; }
-  .pep__ficha { margin-top: 18px; padding: 6px; border-radius: 24px; background: rgba(255, 255, 255, .04); box-shadow: inset 0 0 0 1px var(--line); }
-  .pep__ficha > div { padding: 14px 16px 12px; border-radius: 18px; background: rgba(140, 100, 255, .12); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .3), inset 0 1px 0 rgba(255, 255, 255, .1); }
-  .pep__ficha h3 { font: 500 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--acc); margin-bottom: 8px; }
-  .pep__ficha li { list-style: none; display: flex; gap: 10px; padding: 5px 0; font-size: 14.5px; line-height: 1.35; animation: pepin .6s var(--ease) both; }
-  .pep__ficha li i { flex: none; width: 1.3em; font: 500 11px/1.75 var(--mono); font-style: normal; color: var(--acc-2); }
-  .pep__ficha li span { color: var(--faint); margin-right: 6px; }
-  .pep__ficha li.w { color: var(--faint); animation: none; }
+  .pep__log { display: flex; flex-direction: column; gap: 8px; }
+  .pep__m { max-width: 84%; padding: 10px 14px; border-radius: 20px; font-size: 15px; line-height: 1.42; overflow-wrap: anywhere; animation: pepin .5s var(--ease) both; }
+  .pep__m.p { align-self: flex-start; background: rgba(255, 255, 255, .08); border-bottom-left-radius: 6px; }
+  .pep__m.u { align-self: flex-end; background: #8c64ff; color: #fff; border-bottom-right-radius: 6px; }
+  .pep__m.dots { letter-spacing: .2em; color: var(--faint); }
   @keyframes pepin { from { opacity: 0; transform: translateY(8px); } }
-  .pep__end { display: none; margin-top: 16px; gap: 10px; flex-direction: column; align-items: stretch; }
+  .pep__start { flex: none; align-self: flex-start; margin: 0 0 10px; padding: 9px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 500; background: rgba(140, 100, 255, .3); box-shadow: inset 0 0 0 1px rgba(196, 160, 255, .35); }
+  .pep__start[hidden] { display: none; }
+  .pep__end { display: none; margin-top: 10px; padding: 16px; border-radius: 20px; background: rgba(140, 100, 255, .12); box-shadow: inset 0 0 0 1px rgba(196, 160, 255, .28); gap: 10px; flex-direction: column; align-items: stretch; }
+  .pep__end h3 { font: 500 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #c4a0ff; }
+  .pep__sum { display: grid; grid-template-columns: auto 1fr; gap: 5px 12px; margin: 0 0 4px; font-size: 13.5px; line-height: 1.35; }
+  .pep__sum dt { color: var(--faint); }
+  .pep__sum dd { margin: 0; overflow-wrap: anywhere; }
   .pep.done .pep__end { display: flex; }
-  .pep.done .pep__form { display: none; }
+  .pep.done .pep__form, .pep.done .pep__start { display: none; }
   .pep__end .btn { justify-content: space-between; font-size: 15.5px; }
   .pep__redo { align-self: center; padding: 10px 14px; font-size: 13.5px; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; }
   .pep__wa { align-self: center; padding: 12px 20px; border-radius: 999px; font-size: 14.5px; font-weight: 500; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .35); }
   .pep__wa[hidden] { display: none; }
   .pep__note { text-align: center; font-size: 12px; color: var(--faint); }
-  .pep__form { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .28); }
+  .pep__form { flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 18px; border-radius: 999px; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .28); }
   .pep__form input { flex: 1; min-width: 0; height: 44px; font: inherit; font-size: 16px; color: var(--ink); background: none; border: 0; outline: none; }
   .pep__form input::placeholder { color: var(--faint); }
-  .pep__form button { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #0a0a0e; font-size: 18px; transition: transform .5s var(--ease), opacity .3s; }
+  .pep__form button { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #8c64ff; color: #fff; font-size: 18px; transition: transform .5s var(--ease), opacity .3s; }
   .pep__form button:active { transform: scale(.94); }
   .pep__form button:disabled { opacity: .4; }
   body.pep-on { overflow: hidden; }
@@ -265,23 +269,25 @@
   <div class="pep__in">
     <div class="pep__top">
       <div class="pep__id"><b id="pepName">Pepper</b><span>Asistente de IA de Giancarlo</span></div>
+      <span class="pep__count" id="pepCount"></span>
       <button class="pep__x" type="button" id="pepClose" aria-label="Cerrar">✕</button>
     </div>
+    <div class="pep__orb"><canvas id="pepNet" aria-hidden="true"></canvas></div>
+    <div class="pep__pills" id="pepFicha" aria-label="Tu ficha"></div>
     <div class="pep__body" id="pepBody">
-      <div class="pep__orb"><canvas id="pepNet" aria-hidden="true"></canvas></div>
-      <p class="pep__say" id="pepSay" aria-live="polite"></p>
-      <span class="pep__ans" id="pepAns"></span>
-      <button class="pep__start" type="button" id="pepStart" hidden>Empezar mi entrevista</button>
-      <section class="pep__ficha" aria-label="Tu ficha"><div><h3>Tu ficha · se llena sola</h3><ul id="pepFicha"></ul></div></section>
+      <div class="pep__log" id="pepLog" aria-live="polite"></div>
       <div class="pep__end">
+        <h3>Tu ficha</h3>
+        <dl class="pep__sum" id="pepSum"></dl>
         <a class="btn" id="pepGo" target="_blank" rel="noopener"><em id="pepGoT" style="font-style:normal"></em><span><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
         <p class="pep__note" id="pepNote"></p>
         <a class="pep__wa" id="pepWa" target="_blank" rel="noopener" hidden>Enviar mi ficha por WhatsApp</a>
         <button class="pep__redo" type="button" id="pepRedo">Corregir mis respuestas</button>
       </div>
     </div>
+    <button class="pep__start" type="button" id="pepStart" hidden>Empezar mi entrevista</button>
     <form class="pep__form" id="pepForm" autocomplete="off">
-      <input id="pepIn" type="text" maxlength="300" placeholder="Escribe aquí…" aria-label="Tu respuesta" enterkeyhint="send">
+      <input id="pepIn" type="text" maxlength="300" placeholder="Escribe tu mensaje" aria-label="Tu mensaje" enterkeyhint="send">
       <button type="submit" aria-label="Enviar">↑</button>
     </form>
   </div>
@@ -433,7 +439,7 @@ memNet(document.getElementById("net"), "netPulse");
   var PEPPER = { api: "https://pepper-servidor.vercel.app/api/pepper", pay: "https://buy.stripe.com/9B64gA5Fb7Go2BZ1qqeME09", wa: "51938823222" };
   var root = document.getElementById("pepper"); if (!root) return;
   var $ = function (id) { return document.getElementById(id); };
-  var say = $("pepSay"), ans = $("pepAns"), list = $("pepFicha"), form = $("pepForm"), input = $("pepIn"), send = form.querySelector("button"), body = $("pepBody");
+  var log = $("pepLog"), list = $("pepFicha"), count = $("pepCount"), sum = $("pepSum"), pending = null, form = $("pepForm"), input = $("pepIn"), send = form.querySelector("button"), body = $("pepBody");
   var FIELDS = [["nombre", "Nombre"], ["empresa", "Empresa"], ["equipo", "Equipo"], ["dolor", "Lo que más tiempo quita"], ["meta", "Meta"], ["contacto", "Contacto"]];
   var QS = [
     ["nombre", "Hola, soy Pepper, la asistente de IA de Giancarlo. Te hago unas preguntas cortas para preparar tu diagnóstico. ¿Cómo te llamas?"],
@@ -449,29 +455,33 @@ memNet(document.getElementById("net"), "netPulse");
   var ficha, hist, step, busy, live, phase, mode = "", started = false, lastFocus = null, startBtn = $("pepStart");
 
   function clean(t) { return String(t || "").replace(/\s+/g, " ").trim().slice(0, 300); }
+  function down() { body.scrollTop = body.scrollHeight; }
+  function bubble(cls, text) { var d = document.createElement("div"); d.className = "pep__m " + cls; d.textContent = text; log.appendChild(d); down(); return d; }
+  function typing() { if (!pending) pending = bubble("p dots", "···"); }
   function speak(text, then) {
-    say.classList.add("swap");
-    setTimeout(function () { say.textContent = text; say.classList.remove("swap", "dots"); if (window.pepPulse) window.pepPulse(); if (then) then(); }, 300);
+    typing(); var b = pending; pending = null;
+    setTimeout(function () { b.classList.remove("dots"); b.textContent = text; down(); if (window.pepPulse) window.pepPulse(); if (then) then(); }, 300);
   }
   function drawFicha() {
     list.textContent = ""; var n = 0;
     FIELDS.forEach(function (f) {
       if (!ficha[f[0]]) return; n++;
-      var li = document.createElement("li"), i = document.createElement("i"), d = document.createElement("div"), s = document.createElement("span");
-      i.textContent = n; s.textContent = f[1] + ":"; d.appendChild(s); d.appendChild(document.createTextNode(ficha[f[0]])); li.appendChild(i); li.appendChild(d); list.appendChild(li);
+      var s = document.createElement("span"), b = document.createElement("b");
+      b.textContent = f[1] + ": "; s.appendChild(b); s.appendChild(document.createTextNode(ficha[f[0]])); list.appendChild(s);
     });
+    count.textContent = "Ficha " + n + "/" + FIELDS.length; list.scrollLeft = list.scrollWidth;
     if (n) phase = "entrevista"; startBtn.hidden = phase !== "chat" || root.classList.contains("done");
-    if (!n) { var w = document.createElement("li"); w.className = "w"; w.textContent = "Aquí aparece lo que me vayas contando."; list.appendChild(w); }
   }
   function summary() { var n = 0; return FIELDS.filter(function (f) { return ficha[f[0]]; }).map(function (f) { n++; return n + ". " + f[1] + ": " + ficha[f[0]]; }).join("\n"); }
   function finish(line) {
     var who = ficha.nombre ? ", " + ficha.nombre.split(" ")[0] : "";
     speak((line || "Listo" + who + ". Lo que tengo en la ficha de tu perfil es lo de abajo.") + " " + CLOSE, function () {
-      root.classList.add("done"); ans.textContent = "";
+      root.classList.add("done"); sum.textContent = "";
+      FIELDS.forEach(function (f) { if (!ficha[f[0]]) return; var t = document.createElement("dt"), d = document.createElement("dd"); t.textContent = f[1]; d.textContent = ficha[f[0]]; sum.appendChild(t); sum.appendChild(d); });
       var go = $("pepGo"), wa = $("pepWa"), waUrl = "https://wa.me/" + PEPPER.wa + "?text=" + encodeURIComponent("Hola Giancarlo, Pepper ya me entrevistó para el diagnóstico de IA. Mi ficha:\n" + summary());
       if (PEPPER.pay) { go.href = PEPPER.pay; $("pepGoT").textContent = "Pagar diagnóstico · USD 47"; $("pepNote").textContent = "USD 47, se descuentan si contratas. Después de pagar, envía tu ficha para recibir la hora exacta:"; wa.href = waUrl; wa.hidden = false; }
       else { go.href = waUrl; $("pepGoT").textContent = "Enviar mi ficha por WhatsApp"; $("pepNote").textContent = "Giancarlo te responde ahí con el pago y la hora de tu cita."; wa.hidden = true; }
-      body.scrollTop = 0;
+      if (log.lastChild) body.scrollTop = log.lastChild.offsetTop - log.offsetTop;
     });
   }
   function ask() {
@@ -484,7 +494,7 @@ memNet(document.getElementById("net"), "netPulse");
     ficha[QS[step][0]] = text; drawFicha(); step++; ask();
   }
   function remote(text) {
-    busy = true; send.disabled = true; say.classList.add("dots");
+    busy = true; send.disabled = true; typing();
     var ctl = window.AbortController ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
     fetch(PEPPER.api, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: hist }), signal: ctl ? ctl.signal : undefined })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
@@ -494,19 +504,19 @@ memNet(document.getElementById("net"), "netPulse");
         drawFicha(); hist.push({ role: "assistant", content: d.reply });
         if (d.lista) finish(d.reply); else speak(d.reply);
       })
-      .catch(function () { live = false; say.classList.remove("dots"); fixed(text); })
+      .catch(function () { live = false; fixed(text); })
       .then(function () { clearTimeout(to); busy = false; send.disabled = false; });
   }
   function start(m) {
     mode = m || mode || "entrevista"; phase = mode === "chat" ? "chat" : "entrevista";
     ficha = {}; hist = []; step = 0; busy = false; live = !!PEPPER.api; started = true;
-    root.classList.remove("done"); ans.textContent = ""; drawFicha();
+    root.classList.remove("done"); log.textContent = ""; pending = null; drawFicha();
     var first = phase === "chat" ? HELLO : QS[0][1];
-    say.textContent = ""; speak(first); hist.push({ role: "assistant", content: first });
+    speak(first); hist.push({ role: "assistant", content: first });
   }
   function submit(text) {
     if (!text || busy || root.classList.contains("done")) return;
-    ans.textContent = text; hist.push({ role: "user", content: text });
+    bubble("u", text); hist.push({ role: "user", content: text });
     if (live) remote(text); else fixed(text);
   }
   startBtn.addEventListener("click", function () { submit(GO); input.focus(); });
