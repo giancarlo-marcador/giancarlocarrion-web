@@ -70,6 +70,10 @@
   .btn:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(255, 255, 255, .6), 0 30px 70px -18px rgba(185, 196, 255, .95); }
   .btn:hover span { transform: translate(3px, -2px) scale(1.06); }
   .btn:active { transform: scale(.98); }
+  .ask { display: inline-flex; align-items: center; gap: 10px; padding: 8px 20px 8px 8px; border-radius: 999px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .1); transition: transform .6s var(--ease), background .6s var(--ease); }
+  .ask:hover { background: rgba(140, 100, 255, .22); }
+  .ask:active { transform: scale(.98); }
+  .ask i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; font: 400 21px/1 var(--serif); font-style: italic; color: #fff; background: radial-gradient(circle at 30% 25%, #c9a8ff, #6d4cf2 60%, #2a1a80); box-shadow: 0 0 20px rgba(140, 100, 255, .7); }
   .price { font-size: 14px; line-height: 1.45; color: var(--mute); }
   .price b { display: block; font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
 
@@ -162,8 +166,8 @@
   .pep__x { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px var(--line); font-size: 18px; }
   .pep__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 12px; scrollbar-width: none; }
   .pep__body::-webkit-scrollbar { display: none; }
-  .pep__orb { position: relative; display: grid; place-items: center; height: clamp(110px, 21dvh, 190px); background: radial-gradient(circle at 50% 52%, rgba(140, 100, 255, .42), transparent 62%); }
-  .pep__orb canvas { display: block; width: clamp(110px, 21dvh, 190px); height: clamp(110px, 21dvh, 190px); }
+  .pep__orb { position: relative; display: grid; place-items: center; height: clamp(140px, 25dvh, 220px); background: radial-gradient(circle at 50% 52%, rgba(140, 100, 255, .42), transparent 62%); }
+  .pep__orb canvas { display: block; width: clamp(140px, 25dvh, 220px); height: clamp(140px, 25dvh, 220px); border-radius: 50%; touch-action: none; cursor: grab; }
   .pep.done .pep__orb { display: none; }
   .pep.done .pep__say { margin-top: 18px; font-size: 17px; }
   .pep__say { min-height: 3.2em; padding: 0 6px; text-align: center; font-size: clamp(18px, 4.8vw, 22px); line-height: 1.32; letter-spacing: -.015em; text-wrap: balance; transition: opacity .35s var(--ease), transform .35s var(--ease); }
@@ -171,6 +175,8 @@
   .pep__say.dots::after { content: "…"; }
   .pep__ans { display: block; width: fit-content; max-width: 90%; margin: 12px auto 0; padding: 7px 14px; border-radius: 999px; font-size: 13.5px; color: #fff; background: rgba(140, 100, 255, .32); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .pep__ans:empty { display: none; }
+  .pep__start { display: block; margin: 14px auto 0; padding: 11px 20px; border-radius: 999px; font-size: 14.5px; font-weight: 500; background: var(--ink); color: #0a0a0e; }
+  .pep__start[hidden] { display: none; }
   .pep__ficha { margin-top: 18px; padding: 6px; border-radius: 24px; background: rgba(255, 255, 255, .04); box-shadow: inset 0 0 0 1px var(--line); }
   .pep__ficha > div { padding: 14px 16px 12px; border-radius: 18px; background: rgba(140, 100, 255, .12); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .3), inset 0 1px 0 rgba(255, 255, 255, .1); }
   .pep__ficha h3 { font: 500 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--acc); margin-bottom: 8px; }
@@ -214,6 +220,7 @@
         <p class="lede up" style="--i:2">Reviso contigo producto, clientes, comunicación, sistemas, datos, flujo de efectivo, legal, equipo, misión y liderazgo, y te digo dónde la IA te da resultado primero.</p>
         <div class="act up" style="--i:3" id="solicitar">
           <a class="btn" href="https://wa.me/51938823222?text=Hola%20Giancarlo%2C%20quiero%20solicitar%20un%20diagn%C3%B3stico%20de%20IA%20para%20mi%20empresa." target="_blank" rel="noopener">Solicita un diagnóstico <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+          <button class="ask" type="button" id="pepAsk"><i aria-hidden="true">P</i>Hazle una consulta a Pepper</button>
           <p class="price"><b>USD 47</b>Se descuentan si contratas.</p>
         </div>
       </div>
@@ -264,6 +271,7 @@
       <div class="pep__orb"><canvas id="pepNet" aria-hidden="true"></canvas></div>
       <p class="pep__say" id="pepSay" aria-live="polite"></p>
       <span class="pep__ans" id="pepAns"></span>
+      <button class="pep__start" type="button" id="pepStart" hidden>Empezar mi entrevista</button>
       <section class="pep__ficha" aria-label="Tu ficha"><div><h3>Tu ficha · se llena sola</h3><ul id="pepFicha"></ul></div></section>
       <div class="pep__end">
         <a class="btn" id="pepGo" target="_blank" rel="noopener"><em id="pepGoT" style="font-style:normal"></em><span><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
@@ -343,8 +351,8 @@
 
 /* Red de memoria: la misma red neuronal morada de Memor.iA (130 nodos en una esfera, enlaces por cercanía,
    descargas entre vecinos y onda que enciende nodos), aquí girando sola detrás de «IA». */
-(function () {
-  var cv = document.getElementById("net"); if (!cv) return;
+function memNet(cv, pulse, active) {
+  if (!cv) return;
   var ctx = cv.getContext("2d"), still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var N = 250, dragX = 0, drag = null, vel = 0, NET = [], bolts = [], rings = [], W = 0, S = 0, rotY = 0, t = 0, raf = 0, seen = true;
   for (var i = 0; i < N; i++) {
@@ -397,10 +405,10 @@
     var br = .09 + Math.sin(t * .42) * .04, bR = S * .5, bloom = ctx.createRadialGradient(c, c, 0, c, c, bR);
     bloom.addColorStop(0, "rgba(212,168,75," + br + ")"); bloom.addColorStop(.5, "rgba(139,127,212," + br * .45 + ")"); bloom.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = bloom; ctx.fillRect(c - bR, c - bR, bR * 2, bR * 2);
-    if (!still && seen && !document.hidden) raf = requestAnimationFrame(draw); else raf = 0;
+    if (!still && seen && !document.hidden && (!active || active())) raf = requestAnimationFrame(draw); else raf = 0;
   }
-  function go() { if (!raf && !still) raf = requestAnimationFrame(draw); }
-  window.netPulse = function () { if (!still && rings.length < 3) rings.push({ r: .08 }); };
+  function go() { if (!W) size(); if (!raf && !still && (!active || active())) raf = requestAnimationFrame(draw); }
+  window[pulse] = function () { if (!still && rings.length < 3) rings.push({ r: .08 }); };
   cv.addEventListener("pointerdown", function (e) { drag = { x: e.clientX, y: e.clientY }; vel = 0; cv.classList.add("drag"); try { cv.setPointerCapture(e.pointerId); } catch (_) {} });
   cv.addEventListener("pointermove", function (e) {
     if (!drag) return;
@@ -412,7 +420,9 @@
   if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { seen = en[0].isIntersecting; if (seen) go(); }).observe(cv);
   document.addEventListener("visibilitychange", go);
   if (still) draw(); else go();
-})();
+  return go;
+}
+memNet(document.getElementById("net"), "netPulse");
 </script>
 <script>
 /* Pepper: entrevista al visitante, llena su ficha a la vista y cierra con la cita.
@@ -434,7 +444,9 @@
     ["contacto", "¿A qué WhatsApp o correo te confirmo la cita?"]
   ];
   var CLOSE = "Puedo sacarte cita dentro de las próximas 48 horas. Una vez realizado el pago, te doy la hora exacta.";
-  var ficha, hist, step, busy, live, started = false, lastFocus = null;
+  var HELLO = "Hola, soy Pepper, la asistente de IA de Giancarlo. Pregúntame lo que quieras sobre el diagnóstico. Cuando quieras, empezamos tu entrevista.";
+  var GO = "Quiero empezar mi entrevista";
+  var ficha, hist, step, busy, live, phase, mode = "", started = false, lastFocus = null, startBtn = $("pepStart");
 
   function clean(t) { return String(t || "").replace(/\s+/g, " ").trim().slice(0, 300); }
   function speak(text, then) {
@@ -448,6 +460,7 @@
       var li = document.createElement("li"), i = document.createElement("i"), d = document.createElement("div"), s = document.createElement("span");
       i.textContent = n; s.textContent = f[1] + ":"; d.appendChild(s); d.appendChild(document.createTextNode(ficha[f[0]])); li.appendChild(i); li.appendChild(d); list.appendChild(li);
     });
+    if (n) phase = "entrevista"; startBtn.hidden = phase !== "chat" || root.classList.contains("done");
     if (!n) { var w = document.createElement("li"); w.className = "w"; w.textContent = "Aquí aparece lo que me vayas contando."; list.appendChild(w); }
   }
   function summary() { var n = 0; return FIELDS.filter(function (f) { return ficha[f[0]]; }).map(function (f) { n++; return n + ". " + f[1] + ": " + ficha[f[0]]; }).join("\n"); }
@@ -466,7 +479,10 @@
     if (step >= QS.length) return finish();
     speak(QS[step][1].replace("{nombre}", (ficha.nombre || "").split(" ")[0]));
   }
-  function fixed(text) { ficha[QS[step][0]] = text; drawFicha(); step++; ask(); }
+  function fixed(text) {
+    if (phase === "chat") { phase = "entrevista"; step = 0; startBtn.hidden = true; return speak(text === GO ? "Perfecto. ¿Cómo te llamas?" : "Ahora mismo no puedo responder consultas por aquí; Giancarlo te las contesta en el diagnóstico. Empecemos tu entrevista: ¿cómo te llamas?"); }
+    ficha[QS[step][0]] = text; drawFicha(); step++; ask();
+  }
   function remote(text) {
     busy = true; send.disabled = true; say.classList.add("dots");
     var ctl = window.AbortController ? new AbortController() : null, to = setTimeout(function () { if (ctl) ctl.abort(); }, 25000);
@@ -481,48 +497,38 @@
       .catch(function () { live = false; say.classList.remove("dots"); fixed(text); })
       .then(function () { clearTimeout(to); busy = false; send.disabled = false; });
   }
-  function start() {
+  function start(m) {
+    mode = m || mode || "entrevista"; phase = mode === "chat" ? "chat" : "entrevista";
     ficha = {}; hist = []; step = 0; busy = false; live = !!PEPPER.api; started = true;
     root.classList.remove("done"); ans.textContent = ""; drawFicha();
-    say.textContent = ""; speak(QS[0][1]); hist.push({ role: "assistant", content: QS[0][1] });
+    var first = phase === "chat" ? HELLO : QS[0][1];
+    say.textContent = ""; speak(first); hist.push({ role: "assistant", content: first });
   }
-  form.addEventListener("submit", function (e) {
-    e.preventDefault(); var text = clean(input.value); if (!text || busy || root.classList.contains("done")) return;
-    input.value = ""; ans.textContent = text; hist.push({ role: "user", content: text });
+  function submit(text) {
+    if (!text || busy || root.classList.contains("done")) return;
+    ans.textContent = text; hist.push({ role: "user", content: text });
     if (live) remote(text); else fixed(text);
+  }
+  startBtn.addEventListener("click", function () { submit(GO); input.focus(); });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); var text = clean(input.value); if (!text || busy) return;
+    input.value = ""; submit(text);
   });
-  function open(e) {
-    if (e) e.preventDefault(); lastFocus = document.activeElement;
+  function open(e, m) {
+    if (e) e.preventDefault(); lastFocus = document.activeElement; m = m || "entrevista";
     root.classList.add("open"); root.setAttribute("aria-hidden", "false"); document.body.classList.add("pep-on");
-    if (!started) start(); if (window.pepWake) window.pepWake();
+    var empty = !FIELDS.some(function (f) { return ficha && ficha[f[0]]; });
+    if (!started || (m !== mode && empty && hist.length < 2)) start(m); window.pepWake();
     setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (_) {} }, 350);
   }
   function close() { root.classList.remove("open"); root.setAttribute("aria-hidden", "true"); document.body.classList.remove("pep-on"); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
-  [].forEach.call(document.querySelectorAll(".nav__cta, #solicitar .btn"), function (a) { a.addEventListener("click", open); });
-  $("pepClose").addEventListener("click", close); $("pepRedo").addEventListener("click", function () { start(); input.focus(); });
+  [].forEach.call(document.querySelectorAll(".nav__cta, #solicitar .btn"), function (a) { a.addEventListener("click", function (e) { open(e, "entrevista"); }); });
+  $("pepAsk").addEventListener("click", function (e) { open(e, "chat"); });
+  $("pepClose").addEventListener("click", close); $("pepRedo").addEventListener("click", function () { start("entrevista"); input.focus(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && root.classList.contains("open")) close(); });
 
-  /* Grafo de Pepper: versión chica de la misma red morada */
-  var cv = $("pepNet"), ctx = cv.getContext("2d"), still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var P = [], N = 90, W = 0, rot = 0, glow = 0, raf = 0;
-  for (var i = 0; i < N; i++) { var ph = Math.acos(2 * Math.random() - 1), th = Math.random() * 6.283, r = Math.sqrt(Math.random()) * .9; P.push({ x: r * Math.sin(ph) * Math.cos(th), y: r * Math.sin(ph) * Math.sin(th), z: r * Math.cos(ph), s: .7 + Math.random() }); }
-  function draw() {
-    raf = 0; var w = cv.clientWidth; if (!w) return;
-    if (w !== W) { var d = Math.min(window.devicePixelRatio || 1, 2); W = w; cv.width = cv.height = Math.round(w * d); ctx.setTransform(d, 0, 0, d, 0, 0); }
-    rot += .005 + glow * .02; glow *= .96;
-    var c = W / 2, S = c * .92, cy = Math.cos(rot), sy = Math.sin(rot), max = S * .42, max2 = max * max, a, b;
-    ctx.clearRect(0, 0, W, W);
-    for (a = 0; a < N; a++) { var p = P[a], ax = p.x * cy + p.z * sy, az = -p.x * sy + p.z * cy; p.px = c + ax * S; p.py = c + (p.y * .95 - az * .3) * S; p.d = .75 + az * .3; }
-    ctx.lineWidth = .7; ctx.strokeStyle = "rgba(170,135,255,1)";
-    for (a = 0; a < N; a++) for (b = a + 1; b < N; b++) { var dx = P[a].px - P[b].px, dy = P[a].py - P[b].py, d2 = dx * dx + dy * dy; if (d2 < max2) { ctx.globalAlpha = Math.min(1, (1 - d2 / max2) * (.5 + glow * .5)); ctx.beginPath(); ctx.moveTo(P[a].px, P[a].py); ctx.lineTo(P[b].px, P[b].py); ctx.stroke(); } }
-    ctx.fillStyle = "rgba(214,188,255,1)";
-    for (a = 0; a < N; a++) { ctx.globalAlpha = Math.min(1, P[a].d * (.75 + glow)); ctx.beginPath(); ctx.arc(P[a].px, P[a].py, P[a].s * (1.2 + glow * .8) * P[a].d, 0, 6.283); ctx.fill(); }
-    ctx.globalAlpha = 1;
-    if (!still && root.classList.contains("open") && !document.hidden) raf = requestAnimationFrame(draw);
-  }
-  window.pepWake = function () { if (!raf) raf = requestAnimationFrame(draw); };
-  window.pepPulse = function () { glow = 1; window.pepWake(); };
-  document.addEventListener("visibilitychange", function () { if (!document.hidden && root.classList.contains("open")) window.pepWake(); });
+  /* Grafo de Pepper: el mismo grafo de memoria de la portada, encendido solo mientras Pepper está abierta */
+  window.pepWake = memNet($("pepNet"), "pepPulse", function () { return root.classList.contains("open"); }) || function () {};
 })();
 </script>
 </body>
