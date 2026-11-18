@@ -190,6 +190,9 @@
   @keyframes pepin { from { opacity: 0; transform: translateY(8px); } }
   .pep__start { flex: none; align-self: flex-start; margin: 0 0 10px; padding: 9px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 500; background: rgba(140, 100, 255, .3); box-shadow: inset 0 0 0 1px rgba(196, 160, 255, .35); }
   .pep__start[hidden] { display: none; }
+  .pep__fix { flex: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+  .pep__fix[hidden] { display: none; }
+  .pep__fix button { padding: 8px 13px; border-radius: 999px; font-size: 13px; box-shadow: inset 0 0 0 1px rgba(196, 160, 255, .4); }
   .pep__end { display: none; margin-top: 10px; padding: 16px; border-radius: 20px; background: rgba(140, 100, 255, .12); box-shadow: inset 0 0 0 1px rgba(196, 160, 255, .28); gap: 10px; flex-direction: column; align-items: stretch; }
   .pep__end h3 { font: 500 9.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #c4a0ff; }
   .pep__sum { display: grid; grid-template-columns: auto 1fr; gap: 5px 12px; margin: 0 0 4px; font-size: 13.5px; line-height: 1.35; }
@@ -290,6 +293,7 @@
         <button class="pep__redo" type="button" id="pepRedo">Corregir mis respuestas</button>
       </div>
     </div>
+    <div class="pep__fix" id="pepFix" hidden></div>
     <button class="pep__start" type="button" id="pepStart" hidden>Empezar mi entrevista</button>
     <form class="pep__form" id="pepForm" autocomplete="off">
       <input id="pepIn" type="text" maxlength="300" placeholder="Escribe tu mensaje" aria-label="Tu mensaje" enterkeyhint="send">
@@ -463,8 +467,8 @@ memNet(document.getElementById("net"), "netPulse");
   function down() { body.scrollTop = body.scrollHeight; }
   function bubble(cls, text) { var d = document.createElement("div"); d.className = "pep__m " + cls; d.textContent = text; log.appendChild(d); down(); return d; }
   var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function typing() { if (pending) return; pending = bubble("p", ""); var w = document.createElement("span"); w.className = "pep__wait"; w.textContent = "Pepper está escribiendo"; pending.appendChild(w); }
-  /* Respuesta: «Pepper está escribiendo», luego letra por letra con pausas en la puntuación; cada letra nace morada */
+  function typing() { if (pending) return; pending = bubble("p", ""); var w = document.createElement("span"); w.className = "pep__wait"; w.textContent = "Pepper está analizando"; pending.appendChild(w); }
+  /* Respuesta: «Pepper está analizando», luego letra por letra con pausas en la puntuación; cada letra nace morada */
   function speak(text, then) {
     typing(); var b = pending; pending = null;
     setTimeout(function () {
@@ -524,15 +528,25 @@ memNet(document.getElementById("net"), "netPulse");
       .catch(function () { live = false; fixed(text); })
       .then(function () { clearTimeout(to); busy = false; send.disabled = false; });
   }
+  /* Corregir: conserva la ficha y la conversación; se elige el dato y se reemplaza solo ese */
+  var fixEl = $("pepFix"), fixing = null;
+  function fixChips(show) {
+    fixEl.textContent = ""; fixEl.hidden = !show; if (!show) return;
+    FIELDS.forEach(function (f) { var b = document.createElement("button"); b.type = "button"; b.textContent = f[1]; b.addEventListener("click", function () { fixing = f; fixChips(false); bubble("u", f[1]); speak("Escríbeme el dato correcto para «" + f[1] + "»."); input.focus(); }); fixEl.appendChild(b); });
+    down();
+  }
+  function redo() { root.classList.remove("done"); fixing = null; speak("Claro. ¿Qué dato quieres corregir? Tócalo aquí abajo.", function () { fixChips(true); }); }
   function start(m) {
     mode = m || mode || "entrevista"; phase = mode === "chat" ? "chat" : "entrevista";
     ficha = {}; hist = []; step = 0; busy = false; live = !!PEPPER.api; started = true;
-    root.classList.remove("done"); log.textContent = ""; pending = null; drawFicha();
+    root.classList.remove("done"); log.textContent = ""; pending = null; fixing = null; fixChips(false); drawFicha();
     var first = phase === "chat" ? HELLO : QS[0][1];
     speak(first); hist.push({ role: "assistant", content: first });
   }
   function submit(text) {
     if (!text || busy || root.classList.contains("done")) return;
+    if (fixing) { var f = fixing; fixing = null; bubble("u", text); ficha[f[0]] = text; drawFicha(); hist.push({ role: "user", content: "Corrijo mi dato «" + f[1] + "»: " + text }); hist.push({ role: "assistant", content: "Listo, corregido." }); return finish("Listo, corregido."); }
+    if (!fixEl.hidden) { if (!live) { bubble("u", text); return speak("Toca aquí abajo el dato que quieres corregir."); } fixChips(false); }
     bubble("u", text); hist.push({ role: "user", content: text });
     if (live) remote(text); else fixed(text);
   }
@@ -551,7 +565,7 @@ memNet(document.getElementById("net"), "netPulse");
   function close() { root.classList.remove("open"); root.setAttribute("aria-hidden", "true"); document.body.classList.remove("pep-on"); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
   [].forEach.call(document.querySelectorAll(".nav__cta, #solicitar .btn"), function (a) { a.addEventListener("click", function (e) { open(e, "entrevista"); }); });
   $("pepAsk").addEventListener("click", function (e) { open(e, "chat"); });
-  $("pepClose").addEventListener("click", close); $("pepRedo").addEventListener("click", function () { start("entrevista"); input.focus(); });
+  $("pepClose").addEventListener("click", close); $("pepRedo").addEventListener("click", redo);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && root.classList.contains("open")) close(); });
 
   /* Grafo de Pepper: el mismo grafo de memoria de la portada, encendido solo mientras Pepper está abierta */
