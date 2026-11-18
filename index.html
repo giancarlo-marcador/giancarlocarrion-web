@@ -181,7 +181,12 @@
   .pep__m { max-width: 84%; padding: 10px 14px; border-radius: 20px; font-size: 15px; line-height: 1.42; overflow-wrap: anywhere; animation: pepin .5s var(--ease) both; }
   .pep__m.p { align-self: flex-start; background: rgba(255, 255, 255, .08); border-bottom-left-radius: 6px; }
   .pep__m.u { align-self: flex-end; background: #8c64ff; color: #fff; border-bottom-right-radius: 6px; }
-  .pep__m.dots { letter-spacing: .2em; color: var(--faint); }
+  .pep__wait { font-size: 13px; background: linear-gradient(90deg, var(--faint) 30%, #c4a0ff 50%, var(--faint) 70%) 0 0 / 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: pepshine 1.5s linear infinite; }
+  @keyframes pepshine { to { background-position: -220% 0; } }
+  .pep__m.type::after { content: ""; display: inline-block; width: .55em; height: 1.05em; margin-left: 2px; vertical-align: -.16em; border-radius: 2px; background: #8c64ff; animation: pepblink .9s steps(1) infinite; }
+  @keyframes pepblink { 50% { opacity: 0; } }
+  .pep__g { color: #c4a0ff; text-shadow: 0 0 12px rgba(160, 120, 255, .9); animation: pepink 1s var(--ease) forwards; }
+  @keyframes pepink { to { color: var(--ink); text-shadow: none; } }
   @keyframes pepin { from { opacity: 0; transform: translateY(8px); } }
   .pep__start { flex: none; align-self: flex-start; margin: 0 0 10px; padding: 9px 15px; border-radius: 999px; font-size: 13.5px; font-weight: 500; background: rgba(140, 100, 255, .3); box-shadow: inset 0 0 0 1px rgba(196, 160, 255, .35); }
   .pep__start[hidden] { display: none; }
@@ -457,10 +462,22 @@ memNet(document.getElementById("net"), "netPulse");
   function clean(t) { return String(t || "").replace(/\s+/g, " ").trim().slice(0, 300); }
   function down() { body.scrollTop = body.scrollHeight; }
   function bubble(cls, text) { var d = document.createElement("div"); d.className = "pep__m " + cls; d.textContent = text; log.appendChild(d); down(); return d; }
-  function typing() { if (!pending) pending = bubble("p dots", "···"); }
+  var calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function typing() { if (pending) return; pending = bubble("p", ""); var w = document.createElement("span"); w.className = "pep__wait"; w.textContent = "Pepper está escribiendo"; pending.appendChild(w); }
+  /* Respuesta: «Pepper está escribiendo», luego letra por letra con pausas en la puntuación; cada letra nace morada */
   function speak(text, then) {
     typing(); var b = pending; pending = null;
-    setTimeout(function () { b.classList.remove("dots"); b.textContent = text; down(); if (window.pepPulse) window.pepPulse(); if (then) then(); }, 300);
+    setTimeout(function () {
+      b.textContent = ""; b.setAttribute("aria-label", text); if (window.pepPulse) window.pepPulse();
+      if (calm) { b.textContent = text; down(); if (then) then(); return; }
+      b.classList.add("type"); var i = 0;
+      (function tick() {
+        if (!b.isConnected) return;
+        if (i >= text.length) { b.classList.remove("type"); if (then) then(); return; }
+        var ch = text.charAt(i++), g = document.createElement("span"); g.className = "pep__g"; g.textContent = ch; b.appendChild(g); down();
+        setTimeout(tick, /[,.!?:;]/.test(ch) ? 240 : 14 + Math.random() * 18);
+      })();
+    }, 500);
   }
   function drawFicha() {
     list.textContent = ""; var n = 0;
