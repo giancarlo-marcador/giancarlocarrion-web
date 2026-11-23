@@ -233,7 +233,7 @@
         <div class="act up" style="--i:3" id="solicitar">
           <a class="btn" href="https://wa.me/51938823222?text=Hola%20Giancarlo%2C%20quiero%20solicitar%20un%20diagn%C3%B3stico%20de%20IA%20para%20mi%20empresa." target="_blank" rel="noopener">Solicita un diagnóstico <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
           <button class="ask" type="button" id="pepAsk"><i aria-hidden="true">P</i>Hazle una consulta a Pepper</button>
-          <p class="price"><b>USD 47</b>Se descuentan si contratas.</p>
+          <p class="price"><b>USD 997</b>Se descuentan si contratas.</p>
         </div>
       </div>
 
@@ -500,7 +500,7 @@ memNet(document.getElementById("net"), "netPulse");
       root.classList.add("done"); sum.textContent = "";
       FIELDS.forEach(function (f) { if (!ficha[f[0]]) return; var t = document.createElement("dt"), d = document.createElement("dd"); t.textContent = f[1]; d.textContent = ficha[f[0]]; sum.appendChild(t); sum.appendChild(d); });
       var go = $("pepGo"), wa = $("pepWa"), waUrl = "https://wa.me/" + PEPPER.wa + "?text=" + encodeURIComponent("Hola Giancarlo, Pepper ya me entrevistó para el diagnóstico de IA. Mi ficha:\n" + summary());
-      if (PEPPER.pay) { go.href = PEPPER.pay; $("pepGoT").textContent = "Pagar diagnóstico · USD 47"; $("pepNote").textContent = "USD 47, se descuentan si contratas. Después de pagar, envía tu ficha para recibir la hora exacta:"; wa.href = waUrl; wa.hidden = false; }
+      if (PEPPER.pay) { go.href = PEPPER.pay; $("pepGoT").textContent = "Pagar diagnóstico · USD 997"; $("pepNote").textContent = "USD 997, se descuentan si contratas. Después de pagar, envía tu ficha para recibir la hora exacta:"; wa.href = waUrl; wa.hidden = false; }
       else { go.href = waUrl; $("pepGoT").textContent = "Enviar mi ficha por WhatsApp"; $("pepNote").textContent = "Giancarlo te responde ahí con el pago y la hora de tu cita."; wa.hidden = true; }
       if (log.lastChild) body.scrollTop = log.lastChild.offsetTop - log.offsetTop;
     });
