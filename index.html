@@ -445,7 +445,7 @@ memNet(document.getElementById("net"), "netPulse");
    si el servidor falla, sigue con las preguntas fijas. PEPPER.pay vacío = la ficha sale por WhatsApp. */
 (function () {
   "use strict";
-  var PEPPER = { api: "https://pepper-servidor.vercel.app/api/pepper", pay: "https://buy.stripe.com/9B64gA5Fb7Go2BZ1qqeME09", wa: "51938823222" };
+  var PEPPER = { api: "https://pepper-servidor.vercel.app/api/pepper", pay: "https://buy.stripe.com/dRm3cw1oV5ygccz8SSeME0a", wa: "51938823222" };
   var root = document.getElementById("pepper"); if (!root) return;
   var $ = function (id) { return document.getElementById(id); };
   var log = $("pepLog"), list = $("pepFicha"), count = $("pepCount"), sum = $("pepSum"), pending = null, form = $("pepForm"), input = $("pepIn"), send = form.querySelector("button"), body = $("pepBody");
