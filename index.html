@@ -72,10 +72,15 @@
   .btn:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(255, 255, 255, .6), 0 30px 70px -18px rgba(185, 196, 255, .95); }
   .btn:hover span { transform: translate(3px, -2px) scale(1.06); }
   .btn:active { transform: scale(.98); }
-  .ask { display: inline-flex; align-items: center; gap: 10px; padding: 8px 20px 8px 8px; border-radius: 999px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(185, 196, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .1); transition: transform .6s var(--ease), background .6s var(--ease); }
-  .ask:hover { background: rgba(140, 100, 255, .22); }
-  .ask:active { transform: scale(.98); }
-  .ask i { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; font: 400 21px/1 var(--serif); font-style: italic; color: #fff; background: radial-gradient(circle at 30% 25%, #c9a8ff, #6d4cf2 60%, #2a1a80); box-shadow: 0 0 20px rgba(140, 100, 255, .7); }
+  .ask { display: none; }
+  .ask-float { position: fixed; z-index: 45; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 12px; max-width: calc(100vw - 32px); padding: 10px 22px 10px 10px; border-radius: 999px; font-size: 15px; font-weight: 500; letter-spacing: -.01em; color: #06210f; background: #25D366; box-shadow: 0 12px 32px -10px rgba(37, 211, 102, .7), 0 18px 44px -18px #000, inset 0 1px 0 rgba(255,255,255,.28); transition: transform .6s var(--ease), box-shadow .6s var(--ease), filter .6s var(--ease); }
+  .ask-float:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 16px 36px -10px rgba(37, 211, 102, .85), 0 22px 50px -18px #000; }
+  .ask-float:active { transform: scale(.98); }
+  .ask-float i { position: relative; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: #fff; background: #128C4A; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+  .ask-float i svg { width: 20px; height: 20px; display: block; }
+  .ask-float i em { position: absolute; top: 1px; right: 1px; width: 10px; height: 10px; border-radius: 50%; background: #d8ffe0; box-shadow: 0 0 0 2px #25D366, 0 0 8px rgba(216, 255, 224, .9); }
+  body.pep-on .ask-float { visibility: hidden; pointer-events: none; }
+  @media (max-width: 480px) { .ask-float { right: 14px; bottom: 14px; font-size: 14px; padding: 8px 16px 8px 8px; } .ask-float i { width: 38px; height: 38px; } }
   .price { font-size: 14px; line-height: 1.45; color: var(--mute); }
   .price b { display: block; font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
 
@@ -137,6 +142,7 @@
     .steps-shell { margin-top: 56px; }
   }
   @media (max-width: 699px) {
+    .hero { padding-bottom: 128px; }
     .orb { --r: 41%; }
     .node { font-size: 11.5px; padding: 5px; gap: 0; }
     .node i { width: 24px; height: 24px; font-size: 9.5px; }
@@ -232,7 +238,6 @@
         <p class="lede up" style="--i:2">Reviso contigo producto, clientes, comunicación, sistemas, datos, flujo de efectivo, legal, equipo, misión y liderazgo, y te digo dónde la IA te da resultado primero.</p>
         <div class="act up" style="--i:3" id="solicitar">
           <a class="btn" href="https://wa.me/51938823222?text=Hola%20Giancarlo%2C%20quiero%20solicitar%20un%20diagn%C3%B3stico%20de%20IA%20para%20mi%20empresa." target="_blank" rel="noopener">Solicita un diagnóstico <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
-          <button class="ask" type="button" id="pepAsk"><i aria-hidden="true">P</i>Hazle una consulta a Pepper</button>
           <p class="price"><b>USD 997</b>Se descuentan si contratas. Solo para empresas en Lima.</p>
         </div>
       </div>
@@ -302,6 +307,7 @@
   </div>
 </div>
 
+<button class="ask-float" type="button" id="pepAsk"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.2C7.2 3.2 3.2 6.7 3.2 11c0 2.1.9 4 2.5 5.4L4 20.8l4.8-2.1c.97.3 2 .5 3.2.5 4.8 0 8.8-3.5 8.8-8.2S16.8 3.2 12 3.2Zm-3.1 6.3h6.2a.9.9 0 0 1 0 1.8H8.9a.9.9 0 0 1 0-1.8Zm0 3.3h4.3a.9.9 0 0 1 0 1.8H8.9a.9.9 0 0 1 0-1.8Z"/></svg><em></em></i>Hazle una consulta a Pepper</button>
 <script>
 (function () {
   "use strict";
